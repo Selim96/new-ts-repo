@@ -1,73 +1,25 @@
-abstract class House {
-    protected door: boolean = false;
-    
-    protected tenants: Person[] = [];
+function getPromise (): Promise<(string | number)[]> {
+    return new Promise((resolve) => {
+    resolve(['Text', 50]);
+    });
+}
 
-    constructor( protected key: Key) {
-        this.key = key;
-    };
+getPromise ().then((data) => {
+    console.log(data);
+});
 
-    comeIn(tenant: Person): void {
-        if (this.door) {
-            this.tenants.push(tenant);
-        }
-    };
+type AllType = {
+  name: string;
+  position: number;
+  color: string;
+  weight: number
+}
 
-    public abstract openDoor(key: Key): void;
-};
-
-class MyHouse extends House {
-
-    constructor(key: Key) {
-        super(key);
-    };
-
-    public openDoor(key: Key): void {
-        if (key.getSignature() === this.key.getSignature()) {
-            this.door = true;
-            console.log('Door is opened!');
-        }
-    };
-
-    seeTenants(): void {
-        console.log(this.tenants) ;
-    }
-};
-
-class Key {
-    private signature: number;
-
-    constructor() {
-        this.signature = Math.round(Math.random() * 100);
-    };
-
-    getSignature(): number {
-        return this.signature;
-    }
-};
-
-class Person {
-    constructor(private key: Key, private name: string) {
-        this.key = key;
-        this.name = name;
-    };
-
-    getKey(): Key {
-        return this.key;
-    };
-    getName(): string {
-        return this.name;
-    }
-};
-
-const newKey = new Key();
-
-const newHouse = new MyHouse(newKey);
-
-const newPerson = new Person(newKey, "Max");
-
-
-newHouse.openDoor(newPerson.getKey());
-newHouse.comeIn(newPerson);
-
-newHouse.seeTenants();
+function compare (top, bottom): AllType {
+  return {
+    name: top.name,
+    color: top.color,
+    position: bottom.position,
+    weight: bottom.weight,
+  }
+}
